@@ -1,0 +1,5 @@
+balanceContract: 110000000000000000000 # 110 ETH
+allContracts: true
+corpusDir: "corpus"
+deployer: "0x30000"
+sender: ["0x10000"]

@@ -1,0 +1,6 @@
+corpusDir: "corpus"
+testMode: "assertion"
+allContracts: true
+deployer: "0x30000"
+sender: ["0x30000"]
+testLimit: 60000

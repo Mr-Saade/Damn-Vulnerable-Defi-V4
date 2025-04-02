@@ -1,0 +1,5 @@
+allContracts: true
+corpusDir: "corpus"
+testLimit: 900000
+deployer: "30000"
+sender: ["10000"]

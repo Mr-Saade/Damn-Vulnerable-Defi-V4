@@ -83,6 +83,8 @@ contract NaiveReceiverPool is Multicall, IERC3156FlashLender {
         totalDeposits += amount;
     }
 
+    //Since we could initiate tx through the forwarder contract and can control the msg.data, we can essentially
+    //manipulate and impersonate the msg.sender.
     function _msgSender() internal view override returns (address) {
         if (msg.sender == trustedForwarder && msg.data.length >= 20) {
             return address(bytes20(msg.data[msg.data.length - 20:]));
